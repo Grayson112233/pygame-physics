@@ -1,13 +1,16 @@
 import pygame
 import globals
+import numpy
+import random
 from display import update_display_mode, toggle_fullscreen
 from input import isKeyJustPressed, isKeyPressed
 from ball import Ball
 
-globals.width = 640
-globals.height = 480
+globals.width = 800
+globals.height = 800
 globals.fps = 60
-
+globals.friction = 0.005
+globals.gravity = 0.1
 
 def main():
 
@@ -16,9 +19,12 @@ def main():
     clock = pygame.time.Clock()
 
     entities = []
-    entities.append(Ball(globals.width / 2, globals.height / 2, 5, 5))
+    for i in range(1000):
+        entities.append(Ball(globals.width / 2, globals.height / 2, numpy.random.normal(-10, 10), numpy.random.normal(-10, 10), (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))))
 
     running = True
+
+    globals.window.fill((255, 255, 255))
 
     while(running):
 

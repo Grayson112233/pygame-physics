@@ -4,14 +4,14 @@ import pygame
 
 class Ball():
 
-    def __init__(self, x, y, vx=0, vy=0):
+    def __init__(self, x, y, vx=0, vy=0, color=(0, 0, 0)):
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
-        self.width = 10
-        self.height = 10
-        self.color = (0, 0, 0)
+        self.width = 5
+        self.height = 5
+        self.color = color
 
     # Bounce off of walls with inelastic collisions
     def collide_walls(self):
@@ -26,9 +26,14 @@ class Ball():
             self.vy = -self.vy
         if self.y > globals.height - self.height:
             self.y = globals.height - self.height
-            self.vy = -self.vy
+            self.vy = -self.vy * 0.8
 
     def update(self):
+        # Apply friction
+        self.vx -= self.vx * globals.friction
+        # Apply gravity
+        self.vy += globals.gravity
+        # Move ball
         self.x += self.vx
         self.y += self.vy
         self.collide_walls()
